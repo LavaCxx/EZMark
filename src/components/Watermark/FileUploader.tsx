@@ -1,6 +1,6 @@
 import { createSignal, Show, onMount } from "solid-js";
 type Props = {
-  change: (event: Event) => void;
+  change: (files: FileList) => void;
 };
 export default (props: Props) => {
   let uploader: HTMLInputElement | undefined;
@@ -23,9 +23,11 @@ export default (props: Props) => {
   const drop = (e: DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.dataTransfer) {
-      props.change(e.dataTransfer.files);
+    const files: FileList | undefined = e.dataTransfer?.files;
+    if (files) {
+      props.change(files);
     }
+    setIsDragging(() => false);
   };
   const disableDefaultEvents = () => {
     const doc = document.documentElement;
@@ -40,7 +42,10 @@ export default (props: Props) => {
   return (
     <>
       <div
-        class="w-80 h-60 border-dashed border-2 border-secondary rounded flex items-center justify-center cursor-pointer"
+        class={
+          "w-80 h-60 border-dashed border-2 border-secondary rounded flex items-center justify-center cursor-pointer transition-all hover:shadow-inner hover:border-solid " +
+          (isDragging() && "shadow-inner border-solid")
+        }
         onClick={clickUpload}
         onDragEnter={dragEnter}
         onDragLeave={dragLeave}
@@ -61,7 +66,13 @@ export default (props: Props) => {
         class="hidden"
         type="file"
         ref={uploader}
-        onChange={(e) => props.change(e.target.files)}
+        onChange={(e) => {
+          const files: FileList | null = e.target.files;
+          if (files) {
+            props.change(files);
+            if (uploader) uploader.value = "";
+          }
+        }}
       />
     </>
   );

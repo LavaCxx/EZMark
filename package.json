@@ -18,6 +18,7 @@
     "astro": "^3.6.4",
     "dayjs": "^1.11.10",
     "exif-js": "github:exif-js/exif-js",
+    "exifreader": "^4.17.0",
     "html2canvas": "^1.4.1",
     "sass": "^1.69.5",
     "solid-js": "^1.4.3",

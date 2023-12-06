@@ -10,7 +10,7 @@ export default defineConfig({
       blank: "var(--blank-color)",
       primary: "var(--main-color)",
       secondary: "var(--second-color)",
-      desc: "var(--third-color)",
+      desc: "var(--thrid-color)",
     },
   },
   rules: [

@@ -1,0 +1,32 @@
+{
+  "sony": {
+    "src": "/svgs/sony.svg",
+    "name": "sony",
+    "scale": 2
+  },
+  "xiaomi": {
+    "src": "/svgs/xiaomi.svg",
+    "name": "xiaomi",
+    "scale": 1
+  },
+  "leica": {
+    "src": "/svgs/leica.svg",
+    "name": "leica",
+    "scale": 1
+  },
+  "nikon": {
+    "src": "/svgs/nikon.svg",
+    "name": "nikon",
+    "scale": 1
+  },
+  "fujifilm": {
+    "src": "/svgs/fujifilm.svg",
+    "name": "fujifilm",
+    "scale": 2
+  },
+  "canon": {
+    "src": "/svgs/canon.svg",
+    "name": "canon",
+    "scale": 2
+  }
+}
