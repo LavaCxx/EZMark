@@ -6,8 +6,8 @@ export default defineConfig({
 
   theme: {
     colors: {
-      base: "var(--base-color)",
       blank: "var(--blank-color)",
+      base: "var(--base-color)",
       primary: "var(--main-color)",
       secondary: "var(--second-color)",
       desc: "var(--thrid-color)",

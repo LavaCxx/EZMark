@@ -1,16 +1,20 @@
 import { createSignal, Show, onMount } from "solid-js";
 type Props = {
-  change: (files: FileList) => void;
+  onChange: (files: FileList) => void;
+  loading: boolean;
 };
 export default (props: Props) => {
+  const accept = '.jpg, .jpeg, .png", .webp,.heic';
   let uploader: HTMLInputElement | undefined;
   const [isDragging, setIsDragging] = createSignal<boolean>(false);
   const clickUpload = () => {
+    if (props.loading) return;
     if (uploader) {
       uploader.click();
     }
   };
   const dragEnter = (e: DragEvent) => {
+    if (props.loading) return;
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(() => true);
@@ -21,11 +25,12 @@ export default (props: Props) => {
     setIsDragging(() => false);
   };
   const drop = (e: DragEvent) => {
+    if (props.loading) return;
     e.preventDefault();
     e.stopPropagation();
     const files: FileList | undefined = e.dataTransfer?.files;
     if (files) {
-      props.change(files);
+      props.onChange(files);
     }
     setIsDragging(() => false);
   };
@@ -42,10 +47,11 @@ export default (props: Props) => {
   return (
     <>
       <div
-        class={
-          "w-80 h-60 border-dashed border-2 border-secondary rounded flex items-center justify-center cursor-pointer transition-all hover:shadow-inner hover:border-solid " +
-          (isDragging() && "shadow-inner border-solid")
-        }
+        class={`w-full bg-blank h-auto py-4 md:h-60  border-dashed border-2 border-secondary rounded flex items-center justify-center cursor-pointer transition-all hover:shadow-inner${
+          isDragging() ? " shadow-inner bg-desc" : ""
+        } ${
+          props.loading ? " cursor-not-allowed border-solid brightness-75" : ""
+        }`}
         onClick={clickUpload}
         onDragEnter={dragEnter}
         onDragLeave={dragLeave}
@@ -54,11 +60,18 @@ export default (props: Props) => {
         <Show
           when={isDragging()}
           fallback={
-            <span class="text-secondary select-none">拖拽或点击上传</span>
+            <>
+              <span class="text-secondary select-none hidden md:block">
+                Drop or Click
+              </span>
+              <span class="text-secondary select-none block md:hidden">
+                Choose image
+              </span>
+            </>
           }
         >
           <span class="text-secondary select-none pointer-events-none">
-            将图片拖到此处
+            Drop image here
           </span>
         </Show>
       </div>
@@ -66,10 +79,11 @@ export default (props: Props) => {
         class="hidden"
         type="file"
         ref={uploader}
+        accept={accept}
         onChange={(e) => {
           const files: FileList | null = e.target.files;
           if (files) {
-            props.change(files);
+            props.onChange(files);
             if (uploader) uploader.value = "";
           }
         }}

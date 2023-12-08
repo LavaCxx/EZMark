@@ -28,5 +28,11 @@
     "src": "/svgs/canon.svg",
     "name": "canon",
     "scale": 2
+  },
+  "samsung": {
+    "src": ""
+  },
+  "oneplus": {
+    "src": ""
   }
 }

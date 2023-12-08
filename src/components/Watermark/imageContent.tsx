@@ -1,9 +1,9 @@
-import { Show } from "solid-js";
-import html2canvas from "html2canvas";
+import { Show, createEffect } from "solid-js";
 import logosJson from "./logos.json";
 type Props = {
   data: any;
   src: string;
+  onReady: (content: HTMLDivElement) => void;
 };
 interface LogoType {
   src: string;
@@ -16,15 +16,7 @@ interface LogosType {
 export default (props: Props) => {
   let imgContent: HTMLDivElement | undefined;
   const logos: LogosType = logosJson;
-  const download = () => {
-    if (!imgContent) return;
-    html2canvas(imgContent).then((canvas) => {
-      const link = document.createElement("a");
-      link.download = "image.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    });
-  };
+
   const formatExifTime = (raw: string = "") => {
     let regRes = raw.match(/\d+/g) || [];
     if (regRes.length < 6) return "";
@@ -38,7 +30,7 @@ export default (props: Props) => {
   };
   const getTag = (key: string): string => {
     if (!props.data) return "";
-    let val = props.data[key].description || "";
+    let val = props.data?.[key]?.description || "";
     if (key === "FocalLength") val = val.replace(" ", "");
     return val;
   };
@@ -50,19 +42,32 @@ export default (props: Props) => {
     }
     return false;
   };
+
+  createEffect(() => {
+    if (props.src && imgContent) {
+      props.onReady(imgContent);
+    }
+  });
+
   return (
     <Show when={props.src}>
-      <div class="flex flex-col gap-y-5">
+      <div class="flex flex-col gap-y-5 origin-top-left touch-auto">
         <div
-          class="flex flex-col min-w-xl leading-none relative rounded drop-shadow-[1rem_1rem_0px_var(--main-color)]"
+          class="
+            max-w-xl flex flex-col min-w-xl leading-none relative overflow-hidden drop-shadow-[0.5rem_0.5rem_0px_var(--second-color)]  box-border
+          "
           ref={imgContent}
-          contenteditable
         >
-          <img src={props.src} class="inline-block max-w-xl" />
-          <div class="w-full p-4 box-border bg-white flex justify-between items-center">
-            <div class="flex flex-col gap-y-1">
-              <p class="text-base text-black font-bold">{getTag("Model")}</p>
-              <p class="text-sm text-gray-400">
+          <img
+            src={props.src}
+            class="w-fit min-w-md inline-block  rounded-tl rounded-tr"
+          />
+          <div class="w-full p-4 box-border bg-white flex justify-between items-center rounded-bl rounded-br">
+            <div class="flex flex-col gap-y-0.5">
+              <p class="text-sm text-black font-bold" contenteditable>
+                {getTag("Model")}
+              </p>
+              <p class="text-sm text-gray-400" contenteditable>
                 {formatExifTime(getTag("DateTimeOriginal"))}
               </p>
             </div>
@@ -79,20 +84,19 @@ export default (props: Props) => {
               >
                 <div class="w-0.5 h-10 bg-gray-400 m-x-1" />
               </Show>
-              <div class="text-base text-black flex flex-col gap-y-1 font-bold">
+              <div class="text-sm text-black flex flex-col gap-y-0.5 font-bold">
                 <div class="flex gap-x-1.7">
                   <Show when={getTag("FocalLength")}>
-                    <p>{getTag("FocalLength")}</p>
+                    <p contenteditable>{getTag("FocalLength")}</p>
                   </Show>
                   <Show when={getTag("FNumber")}>
-                    <p>{getTag("FNumber")}</p>
+                    <p contenteditable>{getTag("FNumber")}</p>
                   </Show>
                   <Show when={getTag("ExposureTime")}>
-                    <p>{getTag("ExposureTime")}</p>
+                    <p contenteditable>{getTag("ExposureTime")}s</p>
                   </Show>
                   <Show when={getTag("ISOSpeedRatings")}>
-                    <p>ISO</p>
-                    <p>{getTag("ISOSpeedRatings")}</p>
+                    <p contenteditable>ISO{getTag("ISOSpeedRatings")}</p>
                   </Show>
                 </div>
 
@@ -108,14 +112,14 @@ export default (props: Props) => {
             </div>
           </div>
         </div>
-        <div>
-          <button
-            class="px-4 py-2 bg-desc  shadow-md text-blank hover:bg-secondary transition-all"
-            onClick={download}
-          >
-            下载
-          </button>
-        </div>
+        {/* <div> */}
+        {/*   <button */}
+        {/*     class="px-4 py-2 bg-desc  shadow-md text-blank hover:bg-secondary transition-all" */}
+        {/*     onClick={download} */}
+        {/*   > */}
+        {/*     下载 */}
+        {/*   </button> */}
+        {/* </div> */}
       </div>
     </Show>
   );

@@ -1,7 +1,7 @@
 export default (props: any) => {
   const getTag = (key: string) => {
     if (!props.data) return "";
-    return props.data[key]?.description || "";
+    return props.data?.[key]?.description || "";
   };
   return (
     <div>
