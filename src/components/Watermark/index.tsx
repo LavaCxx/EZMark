@@ -2,11 +2,11 @@ import { onMount, createSignal, Show } from "solid-js";
 
 import ImageContent from "./imageContent.tsx";
 import FileUploader from "./FileUploader.tsx";
-import ExifTable from "./ExifTable.tsx";
+// import ExifTable from "./ExifTable.tsx";
 import SaveButton from "./SaveButton.tsx";
 import * as ExifReader from "exifreader";
 import getThemeColor from "./getThemeColor.ts";
-import * as heic2any from "heic2any";
+import heic2any from "heic2any";
 import html2canvas from "html2canvas";
 
 export default () => {
