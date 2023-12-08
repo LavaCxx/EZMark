@@ -30,9 +30,23 @@
     "scale": 2
   },
   "samsung": {
-    "src": ""
+    "src": "/svgs/samsung.svg",
+    "name": "samsung",
+    "scale": 2
   },
   "oneplus": {
-    "src": ""
+    "src": "/svgs/oneplus.svg",
+    "name": "oneplus",
+    "scale": 2
+  },
+  "apple": {
+    "src": "/svgs/apple.svg",
+    "name": "apple",
+    "scale": 0.8
+  },
+  "vivo": {
+    "src": "/svgs/vivo.svg",
+    "name": "vivo",
+    "scale": 2
   }
 }

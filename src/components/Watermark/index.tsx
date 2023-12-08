@@ -25,10 +25,15 @@ export default () => {
     const file = files[0];
     if (!file) return;
     let fileUrl = URL.createObjectURL(file);
-    const tags = await ExifReader.load(file, {
-      expanded: true,
-    });
-
+    let tags = null;
+    try {
+      tags = await ExifReader.load(file, {
+        expanded: true,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    console.log("tags", file, tags);
     if (tags?.file?.FileType.value === "heic") {
       const blob = await heic2any({
         blob: file,
@@ -36,8 +41,7 @@ export default () => {
       });
       fileUrl = URL.createObjectURL(blob);
     }
-    console.log("file", file, "tags", tags);
-    const exif = tags.exif || null;
+    const exif = tags?.exif || null;
     setExifInfo(() => exif);
     setImgSrc(() => fileUrl);
     drawImg();

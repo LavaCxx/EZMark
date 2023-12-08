@@ -23,12 +23,6 @@ dependencies:
   astro:
     specifier: ^3.6.4
     version: 3.6.4(sass@1.69.5)(typescript@5.3.2)
-  dayjs:
-    specifier: ^1.11.10
-    version: 1.11.10
-  exif-js:
-    specifier: github:exif-js/exif-js
-    version: github.com/exif-js/exif-js/53b0c7c1951a23d255e37ed0a883462218a71b6f
   exifreader:
     specifier: ^4.17.0
     version: 4.17.0
@@ -181,7 +175,7 @@ packages:
       solid-js: ^1.4.3
     dependencies:
       solid-js: 1.8.7
-      vite-plugin-solid: 2.7.2(solid-js@1.8.7)(vite@4.5.0)
+      vite-plugin-solid: 2.8.0(solid-js@1.8.7)(vite@4.5.0)
     transitivePeerDependencies:
       - supports-color
       - vite
@@ -2867,10 +2861,6 @@ packages:
 
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
-    dev: false
-
-  /dayjs@1.11.10:
-    resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
     dev: false
 
   /debug@2.6.9:
@@ -6004,11 +5994,11 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-solid@2.7.2(solid-js@1.8.7)(vite@4.5.0):
-    resolution: {integrity: sha512-GV2SMLAibOoXe76i02AsjAg7sbm/0lngBlERvJKVN67HOrJsHcWgkt0R6sfGLDJuFkv2aBe14Zm4vJcNME+7zw==}
+  /vite-plugin-solid@2.8.0(solid-js@1.8.7)(vite@4.5.0):
+    resolution: {integrity: sha512-n5FAm7ZmTl94VWUoiJCgG7bouF2NlC9CA1wY/qbVnkFbYDWk++bFWyNoU48aLJ+lMtzNeYzJypJXOHzFKxL9xA==}
     peerDependencies:
       solid-js: ^1.7.2
-      vite: ^3.0.0 || ^4.0.0
+      vite: ^3.0.0 || ^4.0.0 || ^5.0.0
     dependencies:
       '@babel/core': 7.23.5
       '@babel/preset-typescript': 7.23.3(@babel/core@7.23.5)
@@ -6483,9 +6473,3 @@ packages:
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
-
-  github.com/exif-js/exif-js/53b0c7c1951a23d255e37ed0a883462218a71b6f:
-    resolution: {tarball: https://codeload.github.com/exif-js/exif-js/tar.gz/53b0c7c1951a23d255e37ed0a883462218a71b6f}
-    name: exif-js
-    version: 2.3.0
-    dev: false

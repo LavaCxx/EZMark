@@ -16,8 +16,6 @@
     "@unocss/preset-wind": "^0.57.7",
     "@unocss/reset": "^0.57.7",
     "astro": "^3.6.4",
-    "dayjs": "^1.11.10",
-    "exif-js": "github:exif-js/exif-js",
     "exifreader": "^4.17.0",
     "heic2any": "^0.0.4",
     "html2canvas": "^1.4.1",
