@@ -116,7 +116,7 @@ export default () => {
     ctx = canvas?.getContext("2d") || null;
   });
   return (
-    <main class="w-full h-full overflow-y-auto bg-blank p-y-5 p-x-10 box-border grid md:grid-rows-2 gap-y-5 xl:grid-rows-none xl:grid-cols-[25%_1fr] xl:gap-x-10 items-center xl:justify-center">
+    <main class="w-full h-full overflow-y-auto bg-blank p-y-5 p-x-10 box-border grid grid-rows-2 gap-y-5 md:grid-rows-none md:grid-cols-[25%_1fr] md:gap-x-10 items-center md:justify-center">
       <div class="flex flex-col gap-y-2 self-start">
         <FileUploader onChange={fileChange} loading={loading()} />
         <Show when={imgSrc()}>
