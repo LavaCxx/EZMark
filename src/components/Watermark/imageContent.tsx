@@ -42,7 +42,7 @@ export default (props: Props) => {
   });
 
   return (
-    <Show when={props.src} fallback={<></>}>
+    <Show when={props.src} fallback={<div></div>}>
       <div class="flex flex-col pb-4 touch-auto w-2xl">
         <div
           class="
@@ -76,9 +76,6 @@ export default (props: Props) => {
               </Show>
               <div class="text-sm text-black flex flex-col gap-y-0.5 font-bold">
                 <div class="flex gap-x-1.7">
-                  <Show when={!props.data}>
-                    <p contenteditable> </p>
-                  </Show>
                   <Show when={getTag("FocalLength")}>
                     <p contenteditable>{getTag("FocalLength")}</p>
                   </Show>

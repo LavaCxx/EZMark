@@ -7,7 +7,6 @@ import SaveButton from "./SaveButton.tsx";
 import * as ExifReader from "exifreader";
 import getThemeColor from "./getThemeColor.ts";
 import html2canvas from "html2canvas";
-import heic2any from "heic2any";
 
 export default () => {
   let canvas: HTMLCanvasElement | undefined;
@@ -41,7 +40,7 @@ export default () => {
     }
     console.log("tags", file, tags);
     if (tags?.file?.FileType.value === "heic") {
-      // const heic2any = (await import("heic2any")).default;
+      const heic2any = (await import("heic2any")).default;
       const blob = await heic2any({
         blob: file,
         toType: "image/png",
