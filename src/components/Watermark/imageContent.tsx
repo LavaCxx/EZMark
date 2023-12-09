@@ -42,7 +42,7 @@ export default (props: Props) => {
   });
 
   return (
-    <Show when={props.src}>
+    <Show when={props.src} fallback={<></>}>
       <div class="flex flex-col pb-4 touch-auto w-2xl">
         <div
           class="
