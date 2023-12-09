@@ -1,8 +1,8 @@
-import { defineConfig } from "unocss";
-
+import { defineConfig, presetTypography, presetIcons } from "unocss";
 import presetWind from "@unocss/preset-wind";
+
 export default defineConfig({
-  presets: [presetWind()],
+  presets: [presetWind(), presetTypography(), presetIcons()],
 
   theme: {
     colors: {
@@ -17,19 +17,19 @@ export default defineConfig({
     [
       /^text-(.*)$/,
       ([, c], { theme }) => {
-        if (theme.colors[c]) return { color: theme.colors[c] };
+        if (theme.colors?.[c]) return { color: theme.colors[c] };
       },
     ],
     [
       /^bg-(.*)$/,
       ([, c], { theme }) => {
-        if (theme.colors[c]) return { background: theme.colors[c] };
+        if (theme.colors?.[c]) return { background: theme.colors[c] };
       },
     ],
     [
       /^border-(.*)$/,
       ([, c], { theme }) => {
-        if (theme.colors[c]) return { "border-color": theme.colors[c] };
+        if (theme.colors?.[c]) return { "border-color": theme.colors[c] };
       },
     ],
   ],

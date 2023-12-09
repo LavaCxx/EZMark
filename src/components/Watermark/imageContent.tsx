@@ -34,14 +34,6 @@ export default (props: Props) => {
     if (key === "FocalLength") val = val.replace(" ", "");
     return val;
   };
-  const isShowVr = (exif: any, logo: string = "") => {
-    if (!exif) return false;
-    const { FocalLength, FNumber, ExposureTime, ISOSpeedRatings } = exif;
-    if ((FocalLength || FNumber || ExposureTime || ISOSpeedRatings) && logo) {
-      return true;
-    }
-    return false;
-  };
 
   createEffect(() => {
     if (props.src && imgContent) {
@@ -51,7 +43,7 @@ export default (props: Props) => {
 
   return (
     <Show when={props.src}>
-      <div class="flex flex-col gap-y-5 origin-top-left touch-auto">
+      <div class="flex flex-col pb-4 touch-auto w-2xl">
         <div
           class="
             max-w-xl flex flex-col min-w-xl leading-none relative overflow-hidden drop-shadow-[0.5rem_0.5rem_0px_var(--second-color)]  box-border
@@ -79,13 +71,14 @@ export default (props: Props) => {
                 }}
                 src={getMakeLogo(getTag("Make")).src}
               />
-              <Show
-                when={isShowVr(props.data, getMakeLogo(getTag("Make")).src)}
-              >
+              <Show when={getMakeLogo(getTag("Make")).src}>
                 <div class="w-0.5 h-10 bg-gray-400 m-x-1" />
               </Show>
               <div class="text-sm text-black flex flex-col gap-y-0.5 font-bold">
                 <div class="flex gap-x-1.7">
+                  <Show when={!props.data}>
+                    <p contenteditable> </p>
+                  </Show>
                   <Show when={getTag("FocalLength")}>
                     <p contenteditable>{getTag("FocalLength")}</p>
                   </Show>
@@ -112,14 +105,6 @@ export default (props: Props) => {
             </div>
           </div>
         </div>
-        {/* <div> */}
-        {/*   <button */}
-        {/*     class="px-4 py-2 bg-desc  shadow-md text-blank hover:bg-secondary transition-all" */}
-        {/*     onClick={download} */}
-        {/*   > */}
-        {/*     下载 */}
-        {/*   </button> */}
-        {/* </div> */}
       </div>
     </Show>
   );

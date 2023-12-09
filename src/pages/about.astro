@@ -2,9 +2,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Container from '../layouts/Container.astro';
+import PostLayout from '../layouts/PostLayout.astro';
 ---
 <Layout title="About">
   <Container>
-  <h1>About Here</h1>
+  <PostLayout>
+  <h2>About Here</h2>
+  <p>作为一个有摄影爱好的程序员，偶尔会需要分享一下自己拍摄的照片</p>
+  <p>小米的徕卡水印相机是一个不错的分享模板，但是目前网上的工具要么需要下载要么广告很多，都不是很方便</p>
+  <p>于是便有了现在这个网站</p>
+  <p>这是我第一次做这类工具，希望大家喜欢</p>
+  <h2>Find Me</h2>
+  <a href="https://github.com/LavaCxx" target="_blank">Github</a>
+  <a href="https://space.bilibili.com/3086598" target="_blank">Bilibili</a>
+  <a href="mailto:lavac@foxmail.com">Email</a>
+  </PostLayout>
   </Container>
 </Layout>

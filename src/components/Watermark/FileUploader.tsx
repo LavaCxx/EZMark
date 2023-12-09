@@ -62,10 +62,10 @@ export default (props: Props) => {
           fallback={
             <>
               <span class="text-secondary select-none hidden md:block">
-                Drop or Click
+                {props.loading ? "Processing..." : "Drop or Click"}
               </span>
               <span class="text-secondary select-none block md:hidden">
-                Choose image
+                {props.loading ? "Processing..." : "Choose image"}
               </span>
             </>
           }

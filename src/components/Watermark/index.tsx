@@ -1,12 +1,11 @@
 import { onMount, createSignal, Show } from "solid-js";
 
-import ImageContent from "./imageContent.tsx";
+import ImageContent from "./ImageContent.tsx";
 import FileUploader from "./FileUploader.tsx";
 // import ExifTable from "./ExifTable.tsx";
 import SaveButton from "./SaveButton.tsx";
 import * as ExifReader from "exifreader";
 import getThemeColor from "./getThemeColor.ts";
-import heic2any from "heic2any";
 import html2canvas from "html2canvas";
 
 export default () => {
@@ -14,16 +13,22 @@ export default () => {
   let ctx: CanvasRenderingContext2D | null = null;
 
   const [imgSrc, setImgSrc] = createSignal("");
+  const [fileName, setFileName] = createSignal("");
   const [exifInfo, setExifInfo] = createSignal({});
   const [currentResult, setCurrentResult] = createSignal<
     HTMLElement | undefined
   >();
+
   const [loading, setLoading] = createSignal(false);
 
   const fileChange = async (files: FileList): Promise<void> => {
     setLoading(() => true);
     const file = files[0];
     if (!file) return;
+    if (file.name) {
+      let fileName = file.name.replace(/\.[^/.]+$/, "");
+      setFileName(() => fileName || "image");
+    }
     let fileUrl = URL.createObjectURL(file);
     let tags = null;
     try {
@@ -35,6 +40,7 @@ export default () => {
     }
     console.log("tags", file, tags);
     if (tags?.file?.FileType.value === "heic") {
+      const heic2any = (await import("heic2any")).default;
       const blob = await heic2any({
         blob: file,
         toType: "image/png",
@@ -102,7 +108,7 @@ export default () => {
     if (!currentResult() || loading()) return;
     html2canvas(currentResult()).then((canvas) => {
       const link = document.createElement("a");
-      link.download = "image.png";
+      link.download = `${fileName()}.png`;
       link.href = canvas.toDataURL();
       link.click();
       setLoading(() => {
@@ -120,7 +126,7 @@ export default () => {
     ctx = canvas?.getContext("2d") || null;
   });
   return (
-    <main class="w-full h-full overflow-y-auto bg-blank p-y-5 p-x-10 box-border grid grid-rows-2 gap-y-5 md:grid-rows-none md:grid-cols-[25%_1fr] md:gap-x-10 items-center md:justify-center">
+    <main class="w-full overflow-y-auto bg-blank py-5 px-10 box-border block md:grid grid-rows-2 gap-y-5 md:grid-rows-none md:grid-cols-[25%_1fr] md:gap-x-10 items-start md:justify-center">
       <div class="flex flex-col gap-y-2 self-start">
         <FileUploader onChange={fileChange} loading={loading()} />
         <Show when={imgSrc()}>
@@ -134,7 +140,7 @@ export default () => {
         {/* <ExifTable data={exifInfo()} /> */}
         {/* </Show> */}
       </div>
-      <div class="flex flex-col gap-y-5 h-full overflow-y-auto pb-5">
+      <div class="mt-5 md:mt-0 flex flex-col gap-y-5 overflow-auto box-border">
         <canvas ref={canvas} class="hidden" />
         <ImageContent src={imgSrc()} data={exifInfo()} onReady={setDownload} />
       </div>

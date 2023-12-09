@@ -1,0 +1,38 @@
+---
+const menu=[
+  {
+    name:'Home',
+    path:'/'
+  },
+  {
+    name:'About',
+    path:'/about'
+  }
+]
+const {url:{pathname}}=Astro
+const currentIndex=menu.findIndex(v=>pathname===v.path)
+---
+
+<header class="h-full border-b-2 border-secondary bg-blank flex justify-between">
+  <nav class="flex items-center h-full">
+
+    {menu.map((v,index) => {
+      return (
+        <a
+          class={`w-36 h-full flex items-center text-lg justify-center transition-all hover:bg-primary hover:text-blank ${index===currentIndex&&'underline decoration-double'}`}
+          href={v.path}
+        >
+          {v.name}
+        </a>
+      );
+    })}
+  </nav>
+  <aside class="flex items-center">
+    <a
+      href="https://github.com/LavaCxx/EZMark"
+      class="w-18 i-mdi-github text-3xl cursor-pointer"
+      target="_blank"
+    />
+  </aside>
+</header>
+
