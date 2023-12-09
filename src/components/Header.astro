@@ -10,6 +10,7 @@ const menu=[
   }
 ]
 const {url:{pathname}}=Astro
+console.log('pathname',pathname)
 const currentIndex=menu.findIndex(v=>pathname===v.path)
 ---
 
