@@ -11,48 +11,63 @@ import html2canvas from "html2canvas";
 export default () => {
   let canvas: HTMLCanvasElement | undefined;
   let ctx: CanvasRenderingContext2D | null = null;
-
+  const maxSize = 10 * 1024 * 1024;
   const [imgSrc, setImgSrc] = createSignal("");
   const [fileName, setFileName] = createSignal("");
   const [exifInfo, setExifInfo] = createSignal({});
   const [currentResult, setCurrentResult] = createSignal<
     HTMLElement | undefined
   >();
+  const [customInfo, setCustomInfo] = createSignal({
+    model: "",
+    colorNum: 4,
+  });
 
   const [loading, setLoading] = createSignal(false);
 
+  // 图片上传监听
   const fileChange = async (files: FileList): Promise<void> => {
     setLoading(() => true);
     const file = files[0];
+    let heicBlob: Blob | undefined;
     if (!file) return;
+    console.log(file);
     if (file.name) {
       let fileName = file.name.replace(/\.[^/.]+$/, "");
       setFileName(() => fileName || "image");
     }
-    let fileUrl = URL.createObjectURL(file);
-    let tags = null;
-    try {
-      tags = await ExifReader.load(file, {
-        expanded: true,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    console.log("tags", file, tags);
-    if (tags?.file?.FileType.value === "heic") {
+    if (file.type === "image/heic") {
       const heic2any = (await import("heic2any")).default;
-      const blob = await heic2any({
+      heicBlob = await heic2any({
         blob: file,
         toType: "image/png",
       });
-      fileUrl = URL.createObjectURL(blob);
     }
-    const exif = tags?.exif || null;
-    setExifInfo(() => exif);
-    setImgSrc(() => fileUrl);
-    drawImg();
+    let fileUrl = "";
+    const Compressor = (await import("compressorjs")).default;
+    new Compressor(heicBlob || file, {
+      retainExif: true,
+      convertSize: maxSize,
+      success: async (result) => {
+        console.log(result);
+        fileUrl = URL.createObjectURL(result);
+        let tags = null;
+        try {
+          tags = await ExifReader.load(file, {
+            expanded: true,
+          });
+        } catch (err) {
+          console.log(err);
+        }
+        const exif = tags?.exif || null;
+        setExifInfo(() => exif);
+        setImgSrc(() => fileUrl);
+        drawImg();
+      },
+    });
   };
 
+  // 绘制隐藏canvas用于取色
   const drawImg = () => {
     const img = new Image();
     img.src = imgSrc();
@@ -60,9 +75,7 @@ export default () => {
       const targetPixels = 50000;
       const originalPixels = img.width * img.height;
       const scale = Math.sqrt(targetPixels / originalPixels);
-      console.log("ratio", img.width / img.height);
       if (!canvas || !ctx) return;
-
       canvas.width = img.width * scale;
       canvas.height = img.height * scale;
       ctx.drawImage(
@@ -87,7 +100,7 @@ export default () => {
       setExifInfo((prev) => {
         return {
           ...prev,
-          themeColors: result.slice(0, 4).map((v) => {
+          themeColors: result.map((v) => {
             let [r, g, b] = v.color.split(",");
             return `rgb(${r},${g},${b})`;
           }),
@@ -95,7 +108,7 @@ export default () => {
       });
     };
   };
-
+  // 设置下载ref
   const setDownload = (content: HTMLElement | undefined) => {
     if (!content) return;
     setLoading(() => {
@@ -104,6 +117,7 @@ export default () => {
 
     setCurrentResult(() => content);
   };
+  // 触发保存
   const download = () => {
     if (!currentResult() || loading()) return;
     html2canvas(currentResult()).then((canvas) => {
@@ -121,6 +135,22 @@ export default () => {
       }, 500);
     });
   };
+  const modelChange = (e: Event) => {
+    setCustomInfo((prev) => {
+      return {
+        ...prev,
+        model: (e.target as HTMLInputElement).value,
+      };
+    });
+  };
+  const colorNumChange = (e: Event) => {
+    setCustomInfo((prev) => {
+      return {
+        ...prev,
+        colorNum: +(e.target as HTMLInputElement).value,
+      };
+    });
+  };
 
   onMount(() => {
     ctx = canvas?.getContext("2d") || null;
@@ -135,6 +165,24 @@ export default () => {
             disabled={!imgSrc()}
             onClick={download}
           />
+          <label for="model">Model</label>
+          <input
+            name="model"
+            class="px-2"
+            placeholder={exifInfo()?.Model?.description || ""}
+            onInput={modelChange}
+            maxlength={25}
+          />
+          <label for="colorNum">Theme color number</label>
+          <select class="px-2" name="colorNum" onChange={colorNumChange}>
+            {[...new Array(7).keys()].map((v, index) => {
+              return (
+                <option selected={index === 4} value={index}>
+                  {index}
+                </option>
+              );
+            })}
+          </select>
         </Show>
         {/* <Show when={imgSrc()}> */}
         {/* <ExifTable data={exifInfo()} /> */}
@@ -142,7 +190,12 @@ export default () => {
       </div>
       <div class="mt-5 md:mt-0 flex flex-col gap-y-5 overflow-auto box-border">
         <canvas ref={canvas} class="hidden" />
-        <ImageContent src={imgSrc()} data={exifInfo()} onReady={setDownload} />
+        <ImageContent
+          src={imgSrc()}
+          data={exifInfo()}
+          customInfo={customInfo()}
+          onReady={setDownload}
+        />
       </div>
     </main>
   );

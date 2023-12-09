@@ -1,10 +1,15 @@
 import { Show, createEffect } from "solid-js";
 import logosJson from "./logos.json";
-type Props = {
+
+interface Props {
   data: any;
   src: string;
+  customInfo: CustomInfoType;
   onReady: (content: HTMLDivElement) => void;
-};
+}
+interface CustomInfoType {
+  [key: string]: string | number;
+}
 interface LogoType {
   src: string;
   name: string;
@@ -57,7 +62,7 @@ export default (props: Props) => {
           <div class="w-full p-4 box-border bg-white flex justify-between items-center rounded-bl rounded-br">
             <div class="flex flex-col gap-y-0.5">
               <p class="text-sm text-black font-bold" contenteditable>
-                {getTag("Model")}
+                {props.customInfo?.model || getTag("Model")}
               </p>
               <p class="text-sm text-gray-400" contenteditable>
                 {formatExifTime(getTag("DateTimeOriginal"))}
@@ -91,12 +96,14 @@ export default (props: Props) => {
                 </div>
 
                 <div class="flex gap-x-2">
-                  {(props.data?.themeColors || []).map((v: string) => (
-                    <span
-                      class="w-4 h-4 rounded-full"
-                      style={{ background: v }}
-                    />
-                  ))}
+                  {(props.data?.themeColors || [])
+                    .slice(0, props.customInfo?.colorNum)
+                    .map((v: string) => (
+                      <span
+                        class="w-4 h-4 rounded-full"
+                        style={{ background: v }}
+                      />
+                    ))}
                 </div>
               </div>
             </div>
