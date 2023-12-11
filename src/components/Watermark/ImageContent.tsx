@@ -50,7 +50,6 @@ export default (props: Props) => {
   return (
     <Show when={props.src} fallback={<div></div>}>
       <div class="flex flex-col pb-4 touch-auto ">
-        style={`width: calc(${props.customInfo?.size || "576px"} + 20px)`}
         <div
           class="
            flex flex-col  leading-none relative overflow-hidden drop-shadow-[0.5rem_0.5rem_0px_var(--second-color)]  box-border
