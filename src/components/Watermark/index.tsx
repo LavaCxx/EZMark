@@ -246,21 +246,6 @@ export default () => {
               );
             })}
           </select>
-          <label for="logo">Logo</label>
-          <select class="px-2" name="logo" onChange={logoChange}>
-            {["<none>", ...Object.keys(logos)].map((v) => {
-              return (
-                <option
-                  selected={
-                    (exifInfo()?.Make?.description || "").toLowerCase() === v
-                  }
-                  value={v}
-                >
-                  {v}
-                </option>
-              );
-            })}
-          </select>
           <label for="size">Size</label>
           <select class="px-2" name="size" onChange={sizeChange}>
             {imageSizes.map((v, index) => {
