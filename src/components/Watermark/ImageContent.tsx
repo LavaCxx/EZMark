@@ -49,16 +49,19 @@ export default (props: Props) => {
 
   return (
     <Show when={props.src} fallback={<div></div>}>
-      <div class="flex flex-col pb-4 touch-auto w-2xl">
+      <div class="flex flex-col pb-4 touch-auto ">
+        style={`width: calc(${props.customInfo?.size || "576px"} + 20px)`}
         <div
           class="
-            max-w-xl flex flex-col min-w-xl leading-none relative overflow-hidden drop-shadow-[0.5rem_0.5rem_0px_var(--second-color)]  box-border
+           flex flex-col  leading-none relative overflow-hidden drop-shadow-[0.5rem_0.5rem_0px_var(--second-color)]  box-border
           "
+          style={`width: ${props.customInfo?.size || "576px"}`}
           ref={imgContent}
         >
           <img
             src={props.src}
-            class="w-fit min-w-md inline-block  rounded-tl rounded-tr"
+            style={`width: ${props.customInfo?.size || "576px"}`}
+            class="w-fit inline-block  rounded-tl rounded-tr"
           />
           <div class="w-full p-4 box-border bg-white flex justify-between items-center rounded-bl rounded-br">
             <div class="flex flex-col gap-y-0.5">
@@ -73,14 +76,18 @@ export default (props: Props) => {
               <img
                 class="inline-block w-10 origin-right"
                 style={{
-                  transform: `scale(${getMakeLogo(getTag("Make")).scale})`,
+                  transform: `scale(${
+                    getMakeLogo(props.customInfo?.logo || getTag("Make")).scale
+                  })`,
                 }}
-                src={getMakeLogo(getTag("Make")).src}
+                src={getMakeLogo(props.customInfo?.logo || getTag("Make")).src}
               />
-              <Show when={getMakeLogo(getTag("Make")).src}>
+              <Show
+                when={getMakeLogo(props.customInfo?.logo || getTag("Make")).src}
+              >
                 <div class="w-0.5 h-10 bg-gray-400 m-x-1" />
               </Show>
-              <div class="text-sm text-black flex flex-col gap-y-0.5 font-bold">
+              <div class="text-sm text-black flex flex-col gap-y-0.5 font-semibold">
                 <div class="flex gap-x-1.7">
                   <Show when={getTag("FocalLength")}>
                     <p contenteditable>{getTag("FocalLength")}</p>

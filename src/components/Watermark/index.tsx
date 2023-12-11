@@ -7,11 +7,41 @@ import SaveButton from "./SaveButton.tsx";
 import * as ExifReader from "exifreader";
 import getThemeColor from "./getThemeColor.ts";
 import html2canvas from "html2canvas";
+import logosJson from "./logos.json";
 
+interface LogoType {
+  src: string;
+  name: string;
+  scale: number;
+}
+interface LogosType {
+  [key: string]: LogoType;
+}
 export default () => {
   let canvas: HTMLCanvasElement | undefined;
   let ctx: CanvasRenderingContext2D | null = null;
   const maxSize = 10 * 1024 * 1024;
+
+  const imageSizes = [
+    {
+      name: "small",
+      value: "512px",
+    },
+    {
+      name: "medium",
+      value: "576px",
+    },
+    {
+      name: "large",
+      value: "672px",
+    },
+    {
+      name: "extra large",
+      value: "896px",
+    },
+  ];
+
+  let logos: LogosType = logosJson || [];
   const [imgSrc, setImgSrc] = createSignal("");
   const [fileName, setFileName] = createSignal("");
   const [exifInfo, setExifInfo] = createSignal({});
@@ -21,6 +51,8 @@ export default () => {
   const [customInfo, setCustomInfo] = createSignal({
     model: "",
     colorNum: 4,
+    logo: "",
+    size: "576px",
   });
 
   const [loading, setLoading] = createSignal(false);
@@ -31,7 +63,6 @@ export default () => {
     const file = files[0];
     let heicBlob: Blob | undefined;
     if (!file) return;
-    console.log(file);
     if (file.name) {
       let fileName = file.name.replace(/\.[^/.]+$/, "");
       setFileName(() => fileName || "image");
@@ -49,13 +80,13 @@ export default () => {
       retainExif: true,
       convertSize: maxSize,
       success: async (result) => {
-        console.log(result);
         fileUrl = URL.createObjectURL(result);
         let tags = null;
         try {
           tags = await ExifReader.load(file, {
             expanded: true,
           });
+          console.log("tags", tags);
         } catch (err) {
           console.log(err);
         }
@@ -96,7 +127,6 @@ export default () => {
         res.push([pixels[i], pixels[i + 1], pixels[i + 2]]);
       }
       const result = getThemeColor(res);
-      console.log(result);
       setExifInfo((prev) => {
         return {
           ...prev,
@@ -135,6 +165,7 @@ export default () => {
       }, 500);
     });
   };
+  // customSetting
   const modelChange = (e: Event) => {
     setCustomInfo((prev) => {
       return {
@@ -148,6 +179,22 @@ export default () => {
       return {
         ...prev,
         colorNum: +(e.target as HTMLInputElement).value,
+      };
+    });
+  };
+  const logoChange = (e: Event) => {
+    setCustomInfo((prev) => {
+      return {
+        ...prev,
+        logo: (e.target as HTMLInputElement).value,
+      };
+    });
+  };
+  const sizeChange = (e: Event) => {
+    setCustomInfo((prev) => {
+      return {
+        ...prev,
+        size: (e.target as HTMLInputElement).value,
       };
     });
   };
@@ -165,6 +212,7 @@ export default () => {
             disabled={!imgSrc()}
             onClick={download}
           />
+          {/* TODO: save as component */}
           <label for="model">Model</label>
           <input
             name="model"
@@ -179,6 +227,46 @@ export default () => {
               return (
                 <option selected={index === 4} value={index}>
                   {index}
+                </option>
+              );
+            })}
+          </select>
+          <label for="logo">Logo</label>
+          <select class="px-2" name="logo" onChange={logoChange}>
+            {["<none>", ...Object.keys(logos)].map((v) => {
+              return (
+                <option
+                  selected={
+                    (exifInfo()?.Make?.description || "").toLowerCase() === v
+                  }
+                  value={v}
+                >
+                  {v}
+                </option>
+              );
+            })}
+          </select>
+          <label for="logo">Logo</label>
+          <select class="px-2" name="logo" onChange={logoChange}>
+            {["<none>", ...Object.keys(logos)].map((v) => {
+              return (
+                <option
+                  selected={
+                    (exifInfo()?.Make?.description || "").toLowerCase() === v
+                  }
+                  value={v}
+                >
+                  {v}
+                </option>
+              );
+            })}
+          </select>
+          <label for="size">Size</label>
+          <select class="px-2" name="size" onChange={sizeChange}>
+            {imageSizes.map((v, index) => {
+              return (
+                <option selected={index === 1} value={v.value}>
+                  {v.name}
                 </option>
               );
             })}
