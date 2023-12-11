@@ -25,7 +25,7 @@ export default (props: Props) => {
   const formatExifTime = (raw: string = "") => {
     let regRes = raw.match(/\d+/g) || [];
     if (regRes.length < 6) return "";
-    const [year, day, month, hour, minute, second] = regRes;
+    const [year, month, day, hour, minute, second] = regRes;
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
   };
   const getMakeLogo = (make: string): LogoType => {
@@ -37,6 +37,7 @@ export default (props: Props) => {
     if (!props.data) return "";
     let val = props.data?.[key]?.description || "";
     if (key === "FocalLength") val = val.replace(" ", "");
+    else if (key === "") val = val.replace(" ", "/");
     return val;
   };
 
