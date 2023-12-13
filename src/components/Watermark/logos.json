@@ -1,52 +1,82 @@
 {
-  "sony": {
-    "src": "/svgs/sony.svg",
-    "name": "sony",
+  "apple": {
+    "src": "/svgs/apple.svg",
+    "name": "Apple",
+    "scale": 0.8
+  },
+  "canon": {
+    "src": "/svgs/canon.svg",
+    "name": "Canon",
     "scale": 2
   },
-  "xiaomi": {
-    "src": "/svgs/xiaomi.svg",
-    "name": "xiaomi",
-    "scale": 1
+  "fujifilm": {
+    "src": "/svgs/fujifilm.svg",
+    "name": "Fujifilm",
+    "scale": 2
+  },
+  "honor": {
+    "src": "/svgs/honor.svg",
+    "name": "Honor",
+    "scale": 2
+  },
+  "huawei": {
+    "src": "/svgs/huawei.svg",
+    "name": "Huawei",
+    "scale": 0.9
   },
   "leica": {
     "src": "/svgs/leica.svg",
-    "name": "leica",
+    "name": "Leica",
     "scale": 1
   },
   "nikon": {
     "src": "/svgs/nikon.svg",
-    "name": "nikon",
+    "name": "Nikon",
     "scale": 1
   },
-  "fujifilm": {
-    "src": "/svgs/fujifilm.svg",
-    "name": "fujifilm",
+  "oneplus": {
+    "src": "/svgs/oneplus.svg",
+    "name": "OnePlus",
     "scale": 2
   },
-  "canon": {
-    "src": "/svgs/canon.svg",
-    "name": "canon",
+  "oppo": {
+    "src": "/svgs/oppo.svg",
+    "name": "OPPO",
     "scale": 2
   },
   "samsung": {
     "src": "/svgs/samsung.svg",
-    "name": "samsung",
+    "name": "Samsung",
     "scale": 2
   },
-  "oneplus": {
-    "src": "/svgs/oneplus.svg",
-    "name": "oneplus",
+  "sigma": {
+    "src": "/svgs/sigma.svg",
+    "name": "Sigma",
     "scale": 2
   },
-  "apple": {
-    "src": "/svgs/apple.svg",
-    "name": "apple",
-    "scale": 0.8
+  "sony": {
+    "src": "/svgs/sony.svg",
+    "name": "Sony",
+    "scale": 2
+  },
+  "sony_alpha": {
+    "src": "/svgs/sony_alpha.svg",
+    "name": "Sony Alpha",
+    "scale": 1
+  },
+  "tamron": {
+    "src": "/svgs/tamron.svg",
+    "name": "Tamron",
+    "scale": 2
   },
   "vivo": {
-    "src": "/svgs/vivo.svg",
+    "src": "/svgs/Vivo.svg",
     "name": "vivo",
     "scale": 2
+  },
+  "xiaomi": {
+    "src": "/svgs/xiaomi.svg",
+    "name": "Xiaomi",
+    "scale": 1
   }
 }

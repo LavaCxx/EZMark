@@ -241,7 +241,7 @@ export default () => {
                   }
                   value={v}
                 >
-                  {v}
+                  {logos[v]?.name || "<none>"}
                 </option>
               );
             })}

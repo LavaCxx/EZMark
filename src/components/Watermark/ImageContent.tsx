@@ -67,9 +67,11 @@ export default (props: Props) => {
               <p class="text-sm text-black font-bold" contenteditable>
                 {props.customInfo?.model || getTag("Model")}
               </p>
-              <p class="text-sm text-gray-400" contenteditable>
-                {formatExifTime(getTag("DateTimeOriginal"))}
-              </p>
+              <Show when={getTag("DateTimeOriginal")}>
+                <p class="text-sm text-gray-400" contenteditable>
+                  {formatExifTime(getTag("DateTimeOriginal"))}
+                </p>
+              </Show>
             </div>
             <div class="flex gap-x-1 items-center pointer-events-none select-none">
               <img
