@@ -1,5 +1,4 @@
 ---
-// import { pwaInfo } from 'virtual:pwa-info';
 import '../assets/styles/index.scss';
 interface Props {
 	title: string;
@@ -18,6 +17,9 @@ const { title } = Astro.props;
     <script async src="https://umami.lavac.cc/script.js" data-website-id="3a7751bf-f294-4986-a2c4-d6798ded1580"></script>
 		<meta name="generator" content={Astro.generator} />
     <script src="/src/pwa.ts"></script>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#776b5d" />
+
 		<title>{title}</title>
 	</head>
 	<body>
