@@ -1,9 +1,10 @@
 ## EZMark
 
-一个简单易用的照片参数水印生成器。
+一个简单易用的照片参数水印生成器，支持PWA离线使用。
 
 [预览地址](https://ezmark.lavac.cc/)
 ![example](https://i.imgur.com/4tsHcCF.png)
+![lighthouse](https://i.imgur.com/zZqndhW.png)
 
 目前支持的图片格式包括浏览器本身能支持的格式以及苹果的`.heic`格式。
 
@@ -17,4 +18,4 @@
 
 - [x] _更多品牌logo_
 - [ ] _更多布局_
-- [ ] PWA
+- [x] PWA
