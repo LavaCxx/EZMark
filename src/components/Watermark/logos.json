@@ -9,6 +9,11 @@
     "name": "Canon",
     "scale": 2
   },
+  "dji": {
+    "src": "/svgs/dji.svg",
+    "name": "Dji",
+    "scale": 1.2
+  },
   "fujifilm": {
     "src": "/svgs/fujifilm.svg",
     "name": "Fujifilm",
@@ -24,10 +29,20 @@
     "name": "Huawei",
     "scale": 0.9
   },
+  "insta360": {
+    "src": "/svgs/insta360.svg",
+    "name": "Insta360",
+    "scale": 3
+  },
   "leica": {
     "src": "/svgs/leica.svg",
     "name": "Leica",
     "scale": 1
+  },
+  "lumix": {
+    "src": "/svgs/lumix.svg",
+    "name": "Lumix",
+    "scale": 2.1
   },
   "nikon": {
     "src": "/svgs/nikon.svg",
@@ -43,6 +58,16 @@
     "src": "/svgs/oppo.svg",
     "name": "OPPO",
     "scale": 2
+  },
+  "panasonic": {
+    "src": "/svgs/panasonic.svg",
+    "name": "Panasonic",
+    "scale": 3
+  },
+  "ricoh": {
+    "src": "/svgs/ricoh.svg",
+    "name": "Ricoh",
+    "scale": 2.1
   },
   "samsung": {
     "src": "/svgs/samsung.svg",
