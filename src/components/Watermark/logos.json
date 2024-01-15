@@ -103,5 +103,10 @@
     "src": "/svgs/xiaomi.svg",
     "name": "Xiaomi",
     "scale": 1
+  },
+  "smartisan": {
+    "src": "/svgs/smartisan.svg",
+    "name": "smartisan",
+    "scale": 1
   }
 }
