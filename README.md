@@ -17,6 +17,9 @@
 如使用相机或手机原生相机拍摄的照片即可读取EXIF信息。
 
 手机里以非**文件**模式传输的图片都会因为手机的隐私策略抹掉EXIF信息无法读取。
+## Vercel一键部署
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FLavaCxx%2FEZMark)
 
 ## 代办事项
 

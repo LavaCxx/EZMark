@@ -4,7 +4,7 @@ type Props = {
   loading: boolean;
 };
 export default (props: Props) => {
-  const accept = '.jpg, .jpeg, .png", .webp,.heic';
+  const accept = ".jpg,.jpeg,.png,.webp,.heic";
   let uploader: HTMLInputElement | undefined;
   const [isDragging, setIsDragging] = createSignal<boolean>(false);
   const clickUpload = () => {
