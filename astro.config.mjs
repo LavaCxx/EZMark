@@ -7,6 +7,7 @@ export default defineConfig({
   integrations: [
     AstroPWA({
       injectRegister: true,
+      registerType: 'autoUpdate',
       manifest: {
         name: "EZMark",
         short_name: "EZMark",
