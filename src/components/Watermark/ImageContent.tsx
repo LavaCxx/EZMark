@@ -1,51 +1,54 @@
-import { Show, createEffect } from "solid-js";
-import logosJson from "./logos.json";
+import { Show, createEffect } from "solid-js"
+import logosJson from "./logos.json"
 
-interface Props {
-  data: any;
-  src: string;
-  customInfo: CustomInfoType;
-  onReady: (content: HTMLDivElement) => void;
+type CustomInfoType = {
+  model: string,
+  colorNum: number,
+  logo: string,
+  size: string
 }
-interface CustomInfoType {
-  [key: string]: string | number;
+interface Props {
+  data: any
+  src: string
+  customInfo: CustomInfoType
+  onReady: (content: HTMLDivElement) => void
 }
 interface LogoType {
-  src: string;
-  name: string;
-  scale: number;
+  src: string
+  name: string
+  scale: number
 }
 interface LogosType {
-  [key: string]: LogoType;
+  [key: string]: LogoType
 }
 export default (props: Props) => {
-  let imgContent: HTMLDivElement | undefined;
-  const logos: LogosType = logosJson;
+  let imgContent: HTMLDivElement | undefined
+  const logos: LogosType = logosJson
 
   const formatExifTime = (raw: string = "") => {
-    let regRes = raw.match(/\d+/g) || [];
-    if (regRes.length < 6) return "";
-    const [year, month, day, hour, minute, second] = regRes;
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
-  };
+    let regRes = raw.match(/\d+/g) || []
+    if (regRes.length < 6) return ""
+    const [year, month, day, hour, minute, second] = regRes
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+  }
   const getMakeLogo = (make: string): LogoType => {
-    make = make.toLowerCase();
-    let res: LogoType = logos?.[make] || { src: "", name: "", scale: 1 };
-    return res;
-  };
+    make = make.toLowerCase()
+    let res: LogoType = logos?.[make] || { src: "", name: "", scale: 1 }
+    return res
+  }
   const getTag = (key: string): string => {
-    if (!props.data) return "";
-    let val = props.data?.[key]?.description || "";
-    if (key === "FocalLength") val = val.replace(" ", "");
-    else if (key === "") val = val.replace(" ", "/");
-    return val;
-  };
+    if (!props.data) return ""
+    let val = props.data?.[key]?.description || ""
+    if (key === "FocalLength") val = val.replace(" ", "")
+    else if (key === "") val = val.replace(" ", "/")
+    return val
+  }
 
   createEffect(() => {
     if (props.src && imgContent) {
-      props.onReady(imgContent);
+      props.onReady(imgContent)
     }
-  });
+  })
 
   return (
     <Show when={props.src} fallback={<div></div>}>
@@ -77,9 +80,8 @@ export default (props: Props) => {
               <img
                 class="inline-block w-10 origin-right"
                 style={{
-                  transform: `scale(${
-                    getMakeLogo(props.customInfo?.logo || getTag("Make")).scale
-                  })`,
+                  transform: `scale(${getMakeLogo(props.customInfo?.logo || getTag("Make")).scale
+                    })`,
                 }}
                 src={getMakeLogo(props.customInfo?.logo || getTag("Make")).src}
               />
@@ -120,5 +122,5 @@ export default (props: Props) => {
         </div>
       </div>
     </Show>
-  );
-};
+  )
+}
