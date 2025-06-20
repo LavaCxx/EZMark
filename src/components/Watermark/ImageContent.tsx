@@ -55,15 +55,16 @@ export default (props: Props) => {
       <div class="flex flex-col pb-4 touch-auto ">
         <div
           class="
-           flex flex-col  leading-none relative overflow-hidden drop-shadow-[0.5rem_0.5rem_0px_var(--second-color)]  box-border
+            rounded-tl rounded-tr flex flex-col leading-none relative overflow-hidden drop-shadow-[0.5rem_0.5rem_0px_var(--second-color)] box-border
           "
           style={`width: ${props.customInfo?.size || "576px"}`}
-          ref={imgContent}
+          
         >
+          <div ref={imgContent}>
           <img
             src={props.src}
-            style={`width: ${props.customInfo?.size || "576px"}`}
-            class="w-fit inline-block  rounded-tl rounded-tr"
+            style={`width: ${props.customInfo?.size || "576px"};`}
+            class="block"
           />
           <div class="w-full p-4 box-border bg-white flex justify-between items-center rounded-bl rounded-br">
             <div class="flex flex-col gap-y-0.5">
@@ -118,6 +119,7 @@ export default (props: Props) => {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

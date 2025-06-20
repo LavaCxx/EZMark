@@ -1,8 +1,6 @@
 import { onMount, createSignal, Show } from "solid-js"
-
 import ImageContent from "./ImageContent.tsx"
 import FileUploader from "./FileUploader.tsx"
-// import ExifTable from "./ExifTable.tsx";
 import SaveButton from "./SaveButton.tsx"
 import * as ExifReader from "exifreader"
 import getThemeColor from "./getThemeColor.ts"
@@ -53,9 +51,7 @@ export default () => {
   const [imgSrc, setImgSrc] = createSignal("")
   const [fileName, setFileName] = createSignal("")
   const [exifInfo, setExifInfo] = createSignal({})
-  const [currentResult, setCurrentResult] = createSignal<
-    HTMLElement | undefined
-  >()
+  const [currentResult, setCurrentResult] = createSignal<HTMLElement | undefined>()
   const [customInfo, setCustomInfo] = createSignal<CustomInfoType>({
     model: "",
     colorNum: 4,
@@ -272,11 +268,8 @@ export default () => {
             })}
           </select>
         </Show>
-        {/* <Show when={imgSrc()}> */}
-        {/* <ExifTable data={exifInfo()} /> */}
-        {/* </Show> */}
       </div>
-      <div class="mt-5 md:mt-0 flex flex-col gap-y-5 overflow-auto box-border">
+      <div class="mt-5 md:mt-0 flex flex-col gap-y-5 overflow-auto box-border" >
         <canvas ref={canvas} class="hidden" />
         <ImageContent
           src={imgSrc()}
